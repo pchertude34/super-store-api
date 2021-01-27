@@ -1,0 +1,219 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Super Store API",
+    "version": "0.1.0",
+    "description": "The Suer Store items API"
+  },
+  "tags": [{ "name": "Item", "description": "a store itme" }],
+  "servers": [
+    {
+      "url": "http://localhost:4000/"
+    }
+  ],
+
+  "paths": {
+    "/item/create": {
+      "post": {
+        "tags": ["Item"],
+        "description": "add a new item to the database",
+        "summary": "Add a new item to the database",
+        "operationId": "createItem",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "The new item to add",
+            "required": true,
+            "schema": {
+              "$ref": "#components/schemas/Item"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "descripton": "Item created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#components/schemas/Item"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/item/{id}": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "description": "The id of the item to fetch",
+          "required": true,
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": ["Item"],
+        "description": "Return an item with the given id",
+        "summary": "Find an item by id",
+        "operationId": "getItemById",
+        "responses": {
+          "200": {
+            "description": "item response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#components/schemas/Item"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/item/list": {
+      "parameters": [
+        {
+          "name": "from",
+          "in": "query",
+          "description": "pagination starting point",
+          "required": false,
+          "type": "integer"
+        },
+        {
+          "name": "size",
+          "in": "query",
+          "description": "pagination page size",
+          "required": false,
+          "type": "integer"
+        },
+        {
+          "name": "sortField",
+          "in": "query",
+          "description": "column name to sort on",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "sortDir",
+          "in": "query",
+          "description": "direction to sort",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "description": "either ascending or decending",
+            "default": "asc",
+            "enum": ["asc", "desc"]
+          }
+        },
+        {
+          "name": "isOnSale",
+          "in": "query",
+          "description": "extra filter for getting items that are on sale",
+          "required": false,
+          "type": "boolean"
+        },
+        {
+          "name": "q",
+          "in": "query",
+          "description": "search query for finding items by name",
+          "required": false,
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": ["Item"],
+        "description": "Return a list of store items",
+        "summary": "Find a paginated list of store items",
+        "operationId": "listItems",
+        "responses": {
+          "200": {
+            "description": "items response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#components/schemas/Item"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+
+  "components": {
+    "examples": {
+      "BasketballItemExample": {
+        "summary": "An example of an Basketball item",
+        "description": "An example item that would be returned from the api",
+        "value": {
+          "_id": "5fbfff7d58aa65167efb52ae",
+          "name": "Wilson Evolution Basketball",
+          "description": "A super bouncy and grippy ball that will get you playing like the pros!",
+          "price": 65.99,
+          "avgRating": 4.5,
+          "isOnSale": false,
+          "stockCount": 8,
+          "imageUrl": "https://st-super-store.s3-us-west-2.amazonaws.com/images/wilson_evolution.jpg"
+        }
+      }
+    },
+    "schemas": {
+      "Item": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "the auto generated id of the item"
+          },
+          "name": {
+            "type": "string",
+            "description": "the name of the store item"
+          },
+          "description": {
+            "type": "string",
+            "description": "the description of the store item"
+          },
+          "price": {
+            "type": "number",
+            "description": "the price of the store item in {dollars}.{cents} (i.e. 20.99)"
+          },
+          "avgRaging": {
+            "type": "number",
+            "description": "the average rating of a store item. Can be a whole number, or decimal"
+          },
+          "isOnSale": {
+            "type": "boolean",
+            "description": "Boolean flag the signifies whether the item is on sale or not"
+          },
+          "stockCount": {
+            "type": "integer",
+            "description": "the number of the item that is in stock"
+          },
+          "imageUrl": {
+            "type": "string",
+            "description": "the image url for the item's image"
+          }
+        },
+        "example": {
+          "_id": "5fbfff7d58aa65167efb52ae",
+          "name": "Wilson Evolution Basketball",
+          "description": "A super bouncy and grippy ball that will get you playing like the pros!",
+          "price": 65.99,
+          "avgRating": 4.5,
+          "isOnSale": false,
+          "stockCount": 8,
+          "imageUrl": "https://st-super-store.s3-us-west-2.amazonaws.com/images/wilson_evolution.jpg"
+        }
+      }
+    }
+  }
+}
