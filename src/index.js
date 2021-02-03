@@ -20,8 +20,8 @@ app.use('/item', itemRouter);
 
 connect()
   .then(() =>
-    app.listen(4000, () => {
-      console.log('server on http://localhost:4000');
+    app.listen(process.env.PORT, () => {
+      console.log(`server listening on port ${process.env.PORT}`);
     })
   )
   .catch((e) => console.error(e));
