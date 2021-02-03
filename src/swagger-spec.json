@@ -8,7 +8,12 @@
   "tags": [{ "name": "Item", "description": "a store itme" }],
   "servers": [
     {
-      "url": "http://localhost:4000/"
+      "url": "https://gp-super-store-api.herokuapp.com/",
+      "description": "production"
+    },
+    {
+      "url": "http://localhost:4000/",
+      "description": "localhost"
     }
   ],
 
