@@ -2,16 +2,18 @@ const itemsController = require('../controllers/items');
 const express = require('express');
 const router = express.Router();
 
-router.post('/create', async (req, res, next) => {
-  const itemToCreate = req.body;
+// Commenting out for now so a bunch of people don't trash the DB
 
-  try {
-    const item = await itemsController.createItem(itemToCreate);
-    res.status(201).json(item);
-  } catch (err) {
-    next(err);
-  }
-});
+// router.post('/create', async (req, res, next) => {
+//   const itemToCreate = req.body;
+
+//   try {
+//     const item = await itemsController.createItem(itemToCreate);
+//     res.status(201).json(item);
+//   } catch (err) {
+//     next(err);
+//   }
+// });
 
 router.get('/list', async (req, res, next) => {
   // Convert 'from' and 'size' to integers because they may be passed as strings.
